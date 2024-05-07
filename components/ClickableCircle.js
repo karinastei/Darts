@@ -4,9 +4,10 @@ import { Circle, Svg } from 'react-native-svg';
 const ClickableCircle = ({ score, handlePress, size, color }) => {
   const [clicked, setClicked] = useState(false);
 
-  const onPress = () => {
-    setClicked(!clicked);
-    handlePress(score);
+  const onPress = (event) => {
+    const { locationX, locationY } = event.nativeEvent;
+    const position = { x: locationX, y: locationY, score };
+    handlePress(score, position);
   };
 
   return (
