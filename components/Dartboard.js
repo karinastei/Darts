@@ -74,7 +74,7 @@ const Dartboard = () => {
       <View style={styles.scoreArea}>
         <Text style={styles.scoreText}>Last Scored: {lastScore}</Text>
         <Text style={styles.scoreText}>Clicked Sections: {clickedSections.join(', ')}</Text>
-        <TouchableOpacity style={styles.removeButton} onPress={onRemoveLast}>
+        <TouchableOpacity style={styles.button} onPress={onRemoveLast}>
           <Text style={styles.buttonText}>Remove Last Added</Text>
         </TouchableOpacity>
       </View>
