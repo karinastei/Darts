@@ -13,7 +13,7 @@ const Stack = createStackNavigator();
 const App = () => {
   return (
     <NavigationContainer>
-      <Stack.Navigator initialRouteName="Home">
+      <Stack.Navigator initialRouteName="Add players">
         <Stack.Screen name="Add players" component={Users} />
         <Stack.Screen name="Dartboard" component={Dartboard} />
       </Stack.Navigator>
