@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import { Circle, Svg } from 'react-native-svg';
 
 const ClickableCircle = ({ score, handlePress, size, color }) => {
-  const [clicked, setClicked] = useState(false);
 
   const onPress = (event) => {
     const { locationX, locationY } = event.nativeEvent;
@@ -17,7 +16,7 @@ const ClickableCircle = ({ score, handlePress, size, color }) => {
         r={size / 2 - 3}
         stroke="black"
         strokeWidth="2"
-        fill={!clicked ? color : '#dc244b'}
+        fill={color}
       />
 
   );

@@ -52,7 +52,7 @@ const Users = ({ navigation }) => {
             keyExtractor={(item, index) => index.toString()}
             renderItem={({ item }) => (
               <View style={styles.playerItem}>
-                <Text style={styles.playerName}>{item}</Text>
+                <Text style={styles.scoreText}>{item}</Text>
                 <TouchableOpacity style={styles.button} onPress={() => removePlayer(item)}>
                   <Text style={styles.buttonText}>X</Text>
                 </TouchableOpacity>

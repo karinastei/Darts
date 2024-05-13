@@ -3,6 +3,7 @@ export const Colors = {
   gray: '#1f1c22',
   teal: 'teal',
   blue: '#032174',
+  red: '#dc244b',
 };
 
 export const Scores = [1, 18, 4, 13, 6, 10, 15, 2, 17, 3, 19, 7, 16, 8, 11, 14, 9, 12, 5, 20];

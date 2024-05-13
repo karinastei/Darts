@@ -10,18 +10,18 @@ const styles = StyleSheet.create({
     height: '100%',
     width: '100%',
   },
-  playersContainer: {
+  throwsArea: {
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: 'white',
+    backgroundColor: Colors.white,
     position: 'absolute',
-    width: 320,
-    top: 10,
+    width: 280,
+    bottom: 60,
     fontSize: 18,
     fontWeight: '600',
     margin: 5,
     padding: 15,
-    borderRadius: 15,
+    borderRadius: 10,
   },
   svgStyle: {
     flex: 1,
@@ -33,19 +33,23 @@ const styles = StyleSheet.create({
   scoreArea: {
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: 'white',
+    backgroundColor: Colors.white,
     position: 'absolute',
-    width: 320,
-    bottom: 60,
+    width: 280,
+    maxHeight: 160,
+    top: 50,
     fontSize: 18,
     fontWeight: '600',
     margin: 5,
+    overflow: 'scroll',
     padding: 15,
     borderRadius: 15,
   },
   scoreText: {
-    color: '#032174',
+    color: Colors.blue,
     fontSize: 18,
+    textTransform: 'uppercase',
+    paddingHorizontal: 20,
   },
   button: {
     margin: '1%',
@@ -110,7 +114,19 @@ const styles = StyleSheet.create({
     width: '90%',
     height: '90%',
     alignItems: 'center'
-
+  },
+  row: {
+    paddingTop: 10,
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+  },
+  boldScoreText: {
+    color: Colors.red,
+    fontSize: 18,
+    textTransform: 'uppercase',
+    paddingHorizontal: 20,
+    fontWeight: 'bold',
   },
 });
 
