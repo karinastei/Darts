@@ -1,6 +1,6 @@
 To enable API endpoint calls in this application, you must first configure the environment variables. 
-Create a .env file in the project root directory and include the following line: APP_API_URL=your IP address:your port. This variable defines the base URL for all API requests made by the application
-Medium Phone API 33
+Create a .env file in the project root directory and include the following line: APP_API_URL=your IP address:your port. This variable defines the base URL for all API requests made by the application.
+For demo Medium Phone API 33
 
 This is a new [**React Native**](https://reactnative.dev) project, bootstrapped using [`@react-native-community/cli`](https://github.com/react-native-community/cli).
 
