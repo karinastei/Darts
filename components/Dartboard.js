@@ -5,26 +5,69 @@ import Sector from './Sector';
 import ClickableCircle from './ClickableCircle';
 import styles from '../config/Styles';
 import {Colors, Scores, Zones} from '../config/DartboardZones';
+import axios from 'axios';
+import Config from 'react-native-config';
+import {Alert} from 'react-native';
 
-const Dartboard = ({route}) => {
-  const {players} = route.params || {players: []};
+const Dartboard = ({route, navigation}) => {
+  const {players, gameId} = route.params || {players: [], gameId: null};
 
   const [clickedSections, setClickedSections] = useState([]);
   const [clickPositions, setClickPositions] = useState([]);
+  const [currentTurnScores, setCurrentTurnScores] = useState([]);
   const [currentPlayerIndex, setCurrentPlayerIndex] = useState(0);
   const [playerScores, setPlayerScores] = useState(players.map(() => 301));
-  const [currentTurnScores, setCurrentTurnScores] = useState([]);
+
+  const saveThrow = (playerId, score, gameId, currentScore) => {
+    const throwData = {
+      player_id: playerId,
+      throw_value: score,
+      game_score: currentScore,
+    };
+    axios
+      .post(`${Config.APP_API_URL}/game/${gameId}/throw`, throwData)
+      .then(response => {})
+      .catch(error => {
+        console.error('Error saving throw:', error);
+      });
+  };
+
+  const endGame = async (id, winnerName, gameId) => {
+    console.log('url: ', `${Config.APP_API_URL}/game/${gameId}`);
+    console.log('body: ', 'end_date:', new Date(), 'winner_id:', id);
+    try {
+      await axios.put(`${Config.APP_API_URL}/game/${gameId}`, {
+        end_date: new Date(),
+        winner_id: id,
+      });
+    } catch (error) {
+      Alert.alert('Error:', `${error.message}`);
+    }
+    navigation.navigate('Scores', {winnerName: winnerName, gameId: gameId});
+  };
 
   const updateScores = useCallback(
     (score, position) => {
       setClickedSections(prev => [...prev, score]);
       setClickPositions(prev => [...prev, position]);
       setCurrentTurnScores(prev => [...prev, score]);
-      setPlayerScores(prevScores =>
-        prevScores.map((s, idx) => (idx === currentPlayerIndex ? s - score : s)),
-      );
+      setPlayerScores(prevScores => {
+        const updatedScores = prevScores.map((s, idx) =>
+          idx === currentPlayerIndex ? s - score : s,
+        );
+        saveThrow(
+          players[currentPlayerIndex]._id,
+          score,
+          gameId,
+          updatedScores[currentPlayerIndex],
+        );
+        if (updatedScores[currentPlayerIndex] <= 0) {
+          endGame(players[currentPlayerIndex]._id, players[currentPlayerIndex].name, gameId);
+        }
+        return updatedScores;
+      });
     },
-    [currentPlayerIndex],
+    [currentPlayerIndex, players, gameId],
   );
 
   const removeLastScore = useCallback(() => {
@@ -67,9 +110,9 @@ const Dartboard = ({route}) => {
         <ScrollView vertical={true}>
           {players.map((player, index) => (
             <Text
-              key={index}
+              key={player._id}
               style={index === currentPlayerIndex ? styles.boldScoreText : styles.scoreText}>
-              {player}: {playerScores[index]}
+              {player.name}: {playerScores[index]}
             </Text>
           ))}
         </ScrollView>
@@ -84,10 +127,10 @@ const Dartboard = ({route}) => {
       </Svg>
       <View style={styles.throwsArea}>
         <Text style={styles.scoreText}>
-          THROWS {players[currentPlayerIndex]}: {currentTurnScores.join(', ')}
+          THROWS {players[currentPlayerIndex].name}: {currentTurnScores.join(', ')}
         </Text>
         <Text style={styles.scoreText}>
-          UP NEXT: {players[(currentPlayerIndex + 1) % players.length]}
+          UP NEXT: {players[(currentPlayerIndex + 1) % players.length].name}
         </Text>
         <View style={styles.row}>
           <TouchableOpacity style={styles.button} onPress={removeLastScore}>
