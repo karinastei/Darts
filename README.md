@@ -1,3 +1,5 @@
+![image](https://github.com/user-attachments/assets/d0574d98-26e8-4c74-a54d-94ab794d5760)
+
 To enable API endpoint calls in this application, you must first configure the environment variables. 
 Create a .env file in the project root directory and include the following line: APP_API_URL=your IP address:your port. This variable defines the base URL for all API requests made by the application.
 For demo Medium Phone API 33
